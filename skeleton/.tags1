@@ -1,0 +1,10 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Cat	/Users/samgerber/Desktop/w3d5/skeleton/spec/validatable_spec.rb	/^    class Cat < SQLObject$/;"	class	line:8
+Human	/Users/samgerber/Desktop/w3d5/skeleton/spec/validatable_spec.rb	/^    class Human < SQLObject$/;"	class	line:14
+House	/Users/samgerber/Desktop/w3d5/skeleton/spec/validatable_spec.rb	/^    class House < SQLObject$/;"	class	line:22
+TempClass	/Users/samgerber/Desktop/w3d5/skeleton/spec/validatable_spec.rb	/^      class TempClass < SQLObject$/;"	class	line:30
