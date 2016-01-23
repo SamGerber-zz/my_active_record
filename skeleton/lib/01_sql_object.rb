@@ -1,9 +1,14 @@
 require_relative 'db_connection'
+require_relative 'errors'
+require_relative 'exceptions'
+require_relative 'core_extension'
 require 'active_support/inflector'
 # NB: the attr_accessor we wrote in phase 0 is NOT used in the rest
 # of this project. It was only a warm up.
 
 class SQLObject
+  attr_reader :errors
+
   def self.columns
     @columns ||= DBConnection.execute2(<<-SQL).first.map(&:to_sym)
       SELECT
@@ -62,6 +67,7 @@ class SQLObject
   end
 
   def initialize(params = {})
+    @errors = Errors.new
     params.each do |attr_name, attr_value|
       attr_name = attr_name.to_sym
       unless self.class.columns.include? attr_name
@@ -80,6 +86,16 @@ class SQLObject
     attributes.values
   end
 
+  def save
+    return false unless valid?
+    saved? ? update : insert
+  end
+
+  def save!
+    raise RecordInvalid, errors unless valid?
+    saved? ? update : insert
+  end
+
   def insert
     cols = self.class.columns.drop(1)
     col_names = cols.join(", ").delete(":")
@@ -93,6 +109,7 @@ class SQLObject
     SQL
 
     self.id = DBConnection.last_insert_row_id
+    true
   end
 
   def update
@@ -107,13 +124,18 @@ class SQLObject
       WHERE
         id = ?
     SQL
-  end
-
-  def save
-    saved? ? update : insert
+    true
   end
 
   def saved?
     !id.nil?
+  end
+
+  def valid?
+    true
+  end
+
+  def invalid?
+    !valid?
   end
 end
